@@ -14,16 +14,19 @@ library(rvest)
 ```
 
 ```{r}
-set.seed(1)
+set.seed(1) # set seed for reproducibility 
 ```
 
-## My first function
+## My first function, z score
+z scores subtract the mean and divide by the st. dev
 
 ```{r}
 x_vec = rnorm(25, mean = 5, sd = 3)
 
 (x_vec - mean(x_vec)) / sd(x_vec)
 ```
+
+the function to compute z score: 
 
 ```{r}
 z_scores = function(x) {
@@ -35,6 +38,8 @@ z_scores = function(x) {
 
 z_scores(x_vec)
 ```
+
+check that the function works: 
 
 ```{r}
 #z_scores(3)
@@ -65,5 +70,78 @@ z_scores = function(x) {
   
   z
 }
+```
+
+## Multiple outputs 
+
+```{r}
+mean_and_sd = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Cannot be computed for length 1 vectors")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+
+  list(mean = mean_x, 
+       sd = sd_x)
+}
+```
+
+```{r}
+mean_and_sd = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Cannot be computed for length 1 vectors")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+
+  tibble(
+    mean = mean_x, 
+    sd = sd_x
+  )
+}
+```
+
+## Multiple inputs 
+
+```{r}
+sim_data = tibble(
+  x = rnorm(30, mean = 2, sd = 3)
+)
+
+sim_data |> 
+  summarize(
+    mu_hat = mean(x),
+    sigma_hat = sd(x)
+  )
+```
+
+```{r}
+sim_mean_sd = function(n, mu = 2, sigma = 3) {
+  
+  sim_data = tibble(
+    x = rnorm(n, mean = mu, sd = sigma),
+  )
+  
+  sim_data |> 
+    summarize(
+      mu_hat = mean(x),
+      sigma_hat = sd(x)
+    )
+}
+```
+
+## Revisiting past examples 
+
+```{r}
+
 ```
 
