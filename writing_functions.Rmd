@@ -1,0 +1,69 @@
+---
+title: "writing_functions"
+output: html_document
+date: "2023-10-26"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(rvest)
+```
+
+```{r}
+set.seed(1)
+```
+
+## My first function
+
+```{r}
+x_vec = rnorm(25, mean = 5, sd = 3)
+
+(x_vec - mean(x_vec)) / sd(x_vec)
+```
+
+```{r}
+z_scores = function(x) {
+  
+  z = (x - mean(x)) / sd(x)
+  z
+  
+}
+
+z_scores(x_vec)
+```
+
+```{r}
+#z_scores(3)
+```
+
+```{r}
+#z_scores("my name is wynter")
+```
+
+```{r}
+#z_scores(iris)
+```
+
+```{r}
+z_scores(sample(c(TRUE, FALSE), 25, replace = TRUE))
+```
+
+```{r}
+z_scores = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Z scores cannot be computed for length 1 vectors")
+  }
+  
+  z = mean(x) / sd(x)
+  
+  z
+}
+```
+
